@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Location</title>
+</head>
+<body>
+    <h2>Edit Location</h2>
+    {% if messages %}
+    {{ message.tags }}
+    <ul class="messages">
+        {% for message in messages %}
+          {{ message }}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="new_location">New Location:</label>
+        <input type="text" id="new_location" name="new_location" required>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

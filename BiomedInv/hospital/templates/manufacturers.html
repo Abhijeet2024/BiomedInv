@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            width: calc(33.33% - 20px);
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h1 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            margin: 5px 0;
+        }
+
+        .report-button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Manufacturer Information</h1>
+<div class="card-container">
+    {% for manufacturer in data %}
+    <div class="card">
+        <h1>{{ manufacturer.0 }}</h1>
+        <p><b>Phone</b>: 4565989887 </p>
+        <p><b>Email</b>: {{ manufacturer.0 }}@gmail.com </p>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>

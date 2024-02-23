@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ dept }}</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px; /* Add some padding to the body */
+    background-color: #f0f0f0;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .card {
+    width: calc(33.33% - 20px); /* Calculate width for 3 cards with spacing */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .card h2 {
+    font-size: 18px;
+    margin-top: 0;
+  }
+
+  .card p {
+    margin: 10px 0;
+  }
+
+  .report-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<h1>{{ dept }} DEPARTMENT</h1>
+<div class="card-container">
+  {% for row in data %}
+  <div class="card">
+    <h2>{{ row.1 }}</h2>
+    <p><strong>Type:</strong> {{ row.2 }}</p>
+    <p><strong>Manufacturer:</strong> {{ row.3 }}</p>
+    <p><strong>Model Number:</strong> {{ row.4 }}</p>
+    <p><strong>Features:</strong> {{ row.5 }}</p>
+    <p><strong>Dimensions:</strong> {{ row.6 }}</p>
+    <p><strong>Weight(kg):</strong> {{ row.7 }}</p>
+    <p><strong>Power:</strong> {{ row.8 }}</p>
+    <p><strong>Certifications:</strong> {{ row.9 }}</p>
+    <p><strong>Preventive Maintenance:</strong> {{ row.10 }}</p>
+    <p><strong>Vendor Name:</strong> {{ row.11 }}</p>
+    <p><strong>AMC Inclusions:</strong> {{ row.12 }}</p>
+    <p><strong>CMC Inclusions:</strong> {{ row.13 }}</p>
+    <p><strong>Status:</strong> {{ row.14 }}</p>
+    <p><strong>UID NO.:</strong> {{ row.15 }}</p>
+    <p><strong>Location:</strong> {{ row.16 }}</p> <a href="{% url 'update_room' %}?model_no={{ row.4 }}">Update Location</a>
+    <button class="report-button" onclick="goToReportProblem(
+      '{{ row.1 }}',
+      '{{ row.2 }}',
+      '{{ row.3 }}',
+      '{{ row.4 }}',
+      '{{ row.5 }}',
+      '{{ row.6 }}',
+      '{{ row.7 }}',
+      '{{ row.8 }}',
+      '{{ row.9 }}',
+      '{{ row.10 }}',
+      '{{ row.11 }}',
+      '{{ row.12 }}',
+      '{{ row.13 }}',
+      '{{ row.14 }}',
+      '{{ row.15 }}'
+    )">Report Problem</button>
+  </div>
+  {% endfor %}
+</div>
+<script>
+function goToReportProblem(
+  equipmentName, type, manufacturer, modelNumber, features, dimensions, weight, power, certifications,
+  preventiveMaintenance, vendorName, amcInclusions, cmcInclusions, status, uid
+) {
+  var url = `/equipments?` +
+    `equipmentName=${encodeURIComponent(equipmentName)}` +
+    `&type=${encodeURIComponent(type)}` +
+    `&manufacturer=${encodeURIComponent(manufacturer)}` +
+    `&modelNumber=${encodeURIComponent(modelNumber)}` +
+    `&features=${encodeURIComponent(features)}` +
+    `&dimensions=${encodeURIComponent(dimensions)}` +
+    `&weight=${encodeURIComponent(weight)}` +
+    `&power=${encodeURIComponent(power)}` +
+    `&certifications=${encodeURIComponent(certifications)}` +
+    `&preventiveMaintenance=${encodeURIComponent(preventiveMaintenance)}` +
+    `&vendorName=${encodeURIComponent(vendorName)}` +
+    `&amcInclusions=${encodeURIComponent(amcInclusions)}` +
+    `&cmcInclusions=${encodeURIComponent(cmcInclusions)}` +
+    `&status=${encodeURIComponent(status)}` +
+    `&uid=${encodeURIComponent(uid)}`;
+  window.location.href = url;
+}
+</script>
+</body>
+</html>

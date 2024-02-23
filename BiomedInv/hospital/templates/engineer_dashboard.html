@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px; /* Add some padding */
+            background-color: #f0f0f0;
+            position: relative; /* Set position to relative */
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px; /* Add some bottom margin */
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .logout-button {
+            padding: 5px 10px; /* Reduce padding */
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            position: absolute; /* Set position to absolute */
+            top: 20px; /* Position from top */
+            right: 20px; /* Position from right */
+            z-index: 999; /* Ensure it's above other elements */
+        }
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+        .flash-message {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+            z-index: 999; /* Ensure it's above other elements */
+        }
+        .flash-message.show {
+            opacity: 1;
+        }
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 2px;
+            cursor: pointer;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            z-index: 999; /* Ensure it's above other elements */
+        }
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+{% if messages %}
+<div class="flash-message show">
+    <button class="close-button" onclick="closeFlashMessage()">X</button>
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<a href="{% url 'home' %}" class="logout-button">Logout</a>
+<table>
+    <thead>
+        <tr>
+            <th>Department</th>
+            <th>Manufacturer</th>
+            <th>Model No</th>
+            <th>UID</th>
+            <th>Solved or Not</th>
+            <th>-------------</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in data %}
+        <tr>
+            <td>{{ d.1 }}</td>
+            <td>{{ d.2 }}</td>
+            <td>{{ d.3 }}</td>
+            <td>{{ d.4 }}</td>
+            <td><button onclick="gotoSolved('{{ d.3 }}')">Solved</button></td>
+            <td><a href="{% url 'generate_report' %}?model_no={{ d.3 }}&uid={{ d.4 }}" class="report-button">Generate Report</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    function gotoSolved(modelNo) {
+        var url = "/engineer_dashboard?" +
+            "model_no=" + encodeURIComponent(modelNo);
+        window.location.href = url;
+    }
+
+    function closeFlashMessage() {
+        var flashMessage = document.querySelector('.flash-message');
+        flashMessage.classList.remove('show');
+    }
+</script>
+</body>
+</html>
